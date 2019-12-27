@@ -9,16 +9,17 @@
 			body{
 				display: flex;
 				flex-direction: column;
+				justify-content: space-around;
 				align-items: center;
 				margin: 0;
 				padding:0;
 				min-width: 100vw;
 				min-height: 100vh;
-				background-color: rgb(36, 37, 36);
+				background-color: rgb(24, 40, 51);
 			}
 			#canvas{
-				border:solid 3px rgb(228, 90, 120);
-				background-color: rgb(231, 227, 227);
+				border:solid 3px rgb(0, 0, 0);
+				background-color: rgba(231, 227, 227, 0.835);
 			}
 			#note{
 				font-size: 18px;
@@ -28,42 +29,62 @@
 				opacity: 1;
    				transition: opacity .40s ease-in-out;	
 			}
-			#note1{
-				font-size: 18px;
-				text-align: justify;
-				color: rgb(255, 243, 81);	
+			#rules{
+				margin-left: 10px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: baseline;
+				/* flex-grow: 1; */
+				width: 100%;
 			}
 			#console{
 				display: flex;
 				flex-direction: column;
+				justify-content: space-around;
 				align-items: center;
-				background-color: rgb(36, 37, 36);
-				flex-grow: 1;
-				width: 100%;
-				padding: 10px;
+				background-color: rgb(9, 17, 22);
+				width: 78%;
+				flex-grow: 0.5
 			}
-			h3{
+			#console p{
+				font-size: 25px;
+				font-weight: bolder;
+				color: white;
+			}
+			h1{
 				color:white;
-				font-size: 30px;
-				font-family: monospace;
 			}
 			small{
 				color:white;
 				font-size: 18px;
-				font-family: monospace;
+			}
+			.mainContent{
+				display: flex;
+				flex-direction: row;
+				align-content: center;
 			}
 		</style>
 	</head>
 	<body>
-		<h3>Game#01</h3>
-		<canvas id="canvas" width="600" height="400">
-			Browser doesn't support HTML5
-		</canvas>
-		<div id="console" height="480">			
-			<small id="note">Tudo pronto!</small>
-			<small id="">Press S to pause the game</small>
-			<small id="">Press left and right arrow to move the bar</small>
+		<h1>Game #01</h1>
+		<div class="mainContent">
+			<div class="game">			
+				<canvas id="canvas" width="700" height="600">
+					Browser doesn't support HTML5
+				</canvas>
+			</div>
+			<div id="rules">
+				<small id="">Press S to start or restart the game</small>
+				<small id="">Press left and right arrow to move the bar</small>
+				<small id="">Press space key to pause the game</small>
+			</div>
+			
 		</div>
+		<div id="console" height="480">			
+				<p id="note">Everything ready!</p>
+				<p id="pause" style="display: none">PAUSED!</p>
+			</div>
 		<script src="main.js"> </script>
 	</body>
 </html>

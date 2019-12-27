@@ -2,7 +2,6 @@ const heigthBar = 20
 const widthBar = 80
 let playerPositionX = 0 //min = 0 max = 480
 const playerSpeed = 10 //pixels each time the key is pressed
-//const playerPositionY = (canvas.height-25) - heigthBar
 const sizeBall  = 10
 let ballPositionX
 let ballPositionY
@@ -11,47 +10,36 @@ let score = 0
 let crash = false
 let winner = false
 let pause = false
+let gameStarted = false
 
 
 window.onload = function(){
-	this.hidingElementAndFadingOut('note')
-	
+	this.hidingElementAndFadingOut('note')	
 	canvas = document.getElementById("canvas")
 	context = canvas.getContext('2d')
-	// player
 	document.addEventListener('keydown',keyDown)
-	setInterval(mainLoop, 30);
-    ballPositionX = canvas.width / 2;
-	ballPositionY = -10
 }
 function hidingElementAndFadingOut(elementId){
 	setTimeout(function () {
 		document.getElementById(elementId).style.opacity='0';
 		setTimeout(function () {
 			document.getElementById(elementId).style.display='none'
-		},1000)
-	},3000)
+		},500)
+	},1000)
 }
 function keyDown(e){
-	if(e.keyCode == 37 && pause == false){
-		if(playerPositionX > 0){ //bigger than 0 because  canvas start in 0 width
-			playerPositionX -= playerSpeed
-		}
+	console.log(e.keyCode)
+	if((e.keyCode == 37||e.keyCode == 39) && pause == false){
+		movePlayer(e.keyCode)
 	}
-	if(e.keyCode == 39 && pause == false){//smaller than canvas total width 
-		if(playerPositionX < canvas.width-widthBar){
-			playerPositionX += playerSpeed
-		}
+	if(e.keyCode == 32 && gameStarted){
+		pauseGame()
 	}
 
-	if(e.keyCode == 83 && pause == false){
-		ballSpeed = 0
-		pause = !pause
+	if(e.keyCode == 83){ 
+		startGame()
 	}
-	else if(e.keyCode == 83 && pause == true){
-		ballSpeed = 10
-		pause = !pause
-	}
+
 }
 function mainLoop(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
@@ -73,12 +61,46 @@ function mainLoop(){
 		score += 1
 		crash = true
 	}
-
-	// if(score == 2 && winner == false){
-	// 	console.log('oi')
-	// 	winner = true
-	// 	this.start()
-	// }
 	context.font = "32pt monospace";
 	context.fillText(score, canvas.width - 300,50);
+}
+function pauseGame(){
+	if(pause == false){
+		ballSpeed = 0
+		pause = true
+		document.getElementById("pause").style.display='block'
+	}
+	else{
+		ballSpeed = 10
+		pause = false
+		document.getElementById("pause").style.display='none'
+	}
+}
+function movePlayer(key){
+	if(key == 37 && pause == false){
+		if(playerPositionX > 0){ //bigger than 0 because  canvas start in 0 width
+			playerPositionX -= playerSpeed
+		}
+	}
+	if(key == 39 && pause == false){//smaller than canvas total width 
+		if(playerPositionX < canvas.width-widthBar){
+			playerPositionX += playerSpeed
+		}
+	}
+}
+function startGame(){
+	if( !gameStarted){ // start game
+		gameStarted = true
+		setInterval(mainLoop, 30);
+		ballPositionX = canvas.width / 2;
+		ballPositionY = -20
+	}
+	else {// restart game
+		score = 0
+		ballPositionY = -20
+		playerPositionX = 0
+		if(!pause){
+			pauseGame()
+		}
+	}
 }
