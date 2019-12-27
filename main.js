@@ -61,19 +61,33 @@ function mainLoop(){
 		score += 1
 		crash = true
 	}
+	if(score == 2 && winner == false){
+		winGame()
+		winner = true
+	}
 	context.font = "32pt monospace";
 	context.fillText(score, canvas.width - 300,50);
+}
+function winGame(){
+	console.log('ganhoou')
+		console.log('ganjou')
+		document.getElementById('winner').style.display = 'block'
+		pauseGame()
+	
 }
 function pauseGame(){
 	if(pause == false){
 		ballSpeed = 0
 		pause = true
 		document.getElementById("pause").style.display='block'
+		return false
 	}
 	else{
 		ballSpeed = 10
 		pause = false
 		document.getElementById("pause").style.display='none'
+		winner = false
+		return true
 	}
 }
 function movePlayer(key){
